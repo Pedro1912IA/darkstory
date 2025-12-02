@@ -70,6 +70,16 @@ npm run dev
 4. Disfruta del cuento y las imágenes generadas
 5. Genera otra historia cuando quieras
 
+## 🔒 Seguridad de API Keys
+
+Las API keys están **completamente protegidas** y solo se usan en el servidor:
+- ✅ Nunca se exponen al cliente/navegador
+- ✅ Almacenadas en variables de entorno (`.env.local`)
+- ✅ `.env.local` está en `.gitignore` (no se sube a GitHub)
+- ✅ Todas las llamadas a APIs se hacen desde el backend de Next.js
+
+Ver [SECURITY.md](./SECURITY.md) para más detalles sobre la protección de API keys.
+
 ## ⚠️ Nota
 
-Necesitas una API key válida de Google Gemini AI. Las imágenes se generan automáticamente basándose en el cuento creado.
+Necesitas API keys válidas de Google Gemini AI y ElevenLabs. Las imágenes y audio se generan automáticamente basándose en el cuento creado.
