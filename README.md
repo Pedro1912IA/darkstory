@@ -19,10 +19,11 @@ Una aplicación web de terror que genera cuentos personalizados e imágenes usan
 npm install
 ```
 
-3. Crea un archivo `.env.local` con tu API key de Gemini:
+3. Crea un archivo `.env.local` con tus API keys:
 
 ```
-GEMINI_API_KEY=AIzaSyCBvSp0vx48CREARqLtoih-CFgPaLVinxM
+GEMINI_API_KEY=tu_gemini_api_key
+ELEVENLABS_API_KEY=tu_elevenlabs_api_key
 ```
 
 4. Ejecuta el servidor de desarrollo:
@@ -32,6 +33,19 @@ npm run dev
 ```
 
 5. Abre [http://localhost:3000](http://localhost:3000) en tu navegador
+
+## 🚀 Despliegue en AWS Amplify
+
+1. Ve a [AWS Amplify Console](https://console.aws.amazon.com/amplify/)
+2. Haz clic en "New app" > "Host web app"
+3. Conecta tu repositorio de GitHub
+4. Amplify detectará automáticamente el archivo `amplify.yml`
+5. En "Environment variables", agrega:
+   - `GEMINI_API_KEY`: Tu API key de Google Gemini
+   - `ELEVENLABS_API_KEY`: Tu API key de ElevenLabs
+6. Haz clic en "Save and deploy"
+
+**Nota:** Asegúrate de que tu cuenta de AWS tenga los permisos necesarios y que las API keys estén configuradas correctamente.
 
 ## 🎨 Paleta de Colores
 
