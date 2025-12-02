@@ -6,7 +6,15 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://main.d1zg38s9plz0es.amplifyapp.com',
+    'http://localhost:3000' // Para desarrollo local
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json({ limit: '50mb' }));
 
 // Health check
