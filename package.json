@@ -11,9 +11,7 @@
   "dependencies": {
     "next": "14.0.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@google/generative-ai": "^0.21.0",
-    "@elevenlabs/elevenlabs-js": "^2.26.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",

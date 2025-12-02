@@ -1,0 +1,12 @@
+# Ignore backend folder - deployed separately to Elastic Beanstalk
+backend/
+
+# Ignore backend files
+backend.zip
+
+# Ignore local env
+.env.local
+.env
+
+# Ignore node_modules in backend
+backend/node_modules/
