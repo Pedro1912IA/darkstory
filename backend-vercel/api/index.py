@@ -42,28 +42,60 @@ Write EXACTLY 1 paragraph. Use vivid descriptions, build tension gradually, and 
         story_response = story_model.generate_content(story_prompt)
         story = story_response.text
         
-        # Generate images using Gemini 2.5 Flash Image
+        # Generate 3 images with Gemini in parallel
         images = []
-        story_snippet = story[:300]
         
+        # Optimized prompts for Gemini
         image_prompts = [
-            f"A dark horror scene: {prompt}. Cinematic, dark atmosphere, horror aesthetic, dramatic lighting",
-            f"Gothic horror illustration: {prompt}. Ominous shadows, eerie atmosphere, dark",
-            f"Nightmare horror scene: {prompt}. Dark fantasy, haunting, mysterious, creepy"
+            f"dark horror scene: {prompt}. cinematic, dramatic lighting",
+            f"gothic horror: {prompt}. ominous shadows, eerie",
+            f"nightmare scene: {prompt}. haunting, mysterious"
         ]
         
-        # Use Pollinations AI for fast image generation (parallel loading)
-        import urllib.parse
-        for img_prompt in image_prompts:
+        # Use threading for parallel image generation
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        import threading
+        
+        def generate_single_image(img_prompt, index):
+            """Generate a single image with Gemini"""
             try:
-                encoded_prompt = urllib.parse.quote(img_prompt)
-                # Pollinations generates images on-demand via URL (loads in parallel on frontend)
-                # Using 768x768 for faster loading while maintaining quality
-                image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=768&height=768&nologo=true&enhance=true&seed={hash(img_prompt) % 10000}"
-                images.append(image_url)
-            except Exception as img_err:
-                print(f"Image generation error: {img_err}")
-                continue
+                print(f"Generating image {index + 1}...")
+                image_model = genai.GenerativeModel('gemini-2.5-flash-image')
+                img_response = image_model.generate_content(img_prompt)
+                
+                if img_response and hasattr(img_response, 'candidates'):
+                    for candidate in img_response.candidates:
+                        if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                            for part in candidate.content.parts:
+                                if hasattr(part, 'inline_data') and part.inline_data:
+                                    if hasattr(part.inline_data, 'data'):
+                                        image_data = part.inline_data.data
+                                        if isinstance(image_data, bytes):
+                                            image_data = base64.b64encode(image_data).decode('utf-8')
+                                        print(f"Image {index + 1} generated successfully")
+                                        return (index, f"data:image/png;base64,{image_data}")
+            except Exception as e:
+                print(f"Error generating image {index + 1}: {e}")
+            return (index, None)
+        
+        # Generate all 3 images in parallel
+        print("Starting parallel image generation with Gemini...")
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            futures = [
+                executor.submit(generate_single_image, prompt, idx)
+                for idx, prompt in enumerate(image_prompts)
+            ]
+            
+            # Collect results as they complete
+            results = [None, None, None]
+            for future in as_completed(futures):
+                idx, img_data = future.result()
+                if img_data:
+                    results[idx] = img_data
+        
+        # Add successfully generated images
+        images = [img for img in results if img is not None]
+        print(f"Generated {len(images)} images with Gemini")
         
         return jsonify({
             'story': story,
