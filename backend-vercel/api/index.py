@@ -42,25 +42,35 @@ Write EXACTLY 1 paragraph. Use vivid descriptions, build tension gradually, and 
         story_response = story_model.generate_content(story_prompt)
         story = story_response.text
         
-        # Generate images
-        image_model = genai.GenerativeModel('gemini-2.0-flash-exp-image')
-        story_snippet = story[:500]
+        # Generate images using Gemini 2.5 Flash Image
+        images = []
+        story_snippet = story[:400]
         
         image_prompts = [
             f"Create a dark horror scene based on this story: {story_snippet}. Style: cinematic, dark atmosphere, horror movie aesthetic, dramatic lighting",
-            f"Create a terrifying illustration inspired by: {story_snippet}. Style: gothic horror, ominous, shadows, eerie atmosphere",
-            f"Create a nightmare scene from: {story_snippet}. Style: dark fantasy, haunting, mysterious, horror art"
+            f"Create a terrifying gothic horror illustration inspired by: {story_snippet}. Style: ominous shadows, eerie atmosphere",
+            f"Create a nightmare horror scene from: {story_snippet}. Style: dark fantasy, haunting, mysterious, horror art"
         ]
         
-        images = []
+        # Use Gemini 2.5 Flash Image model
+        image_model = genai.GenerativeModel('gemini-2.5-flash-image')
+        
         for img_prompt in image_prompts:
             try:
                 img_response = image_model.generate_content(img_prompt)
-                for part in img_response.candidates[0].content.parts:
-                    if hasattr(part, 'inline_data'):
-                        image_data = base64.b64encode(part.inline_data.data).decode('utf-8')
-                        images.append(f"data:image/png;base64,{image_data}")
-                        break
+                
+                # Extract image from response
+                if hasattr(img_response, 'candidates') and img_response.candidates:
+                    for part in img_response.candidates[0].content.parts:
+                        if hasattr(part, 'inline_data') and part.inline_data:
+                            # Get the base64 image data
+                            image_data = part.inline_data.data
+                            # If it's bytes, encode to base64
+                            if isinstance(image_data, bytes):
+                                image_data = base64.b64encode(image_data).decode('utf-8')
+                            images.append(f"data:image/png;base64,{image_data}")
+                            break
+                            
             except Exception as img_err:
                 print(f"Image generation error: {img_err}")
                 continue
