@@ -1,0 +1,18 @@
+Dec  2 04:52:11 ip-172-31-40-89 web[2144]: > Elastic-Beanstalk-Sample-App@0.0.1 start
+Dec  2 04:52:11 ip-172-31-40-89 web[2144]: > node app.js
+Dec  2 04:52:12 ip-172-31-40-89 web[2183]: Server running at http://127.0.0.1:8080/
+Dec  2 20:19:02 ip-172-31-40-89 web[33191]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:19:03 ip-172-31-40-89 web[33200]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:19:03 ip-172-31-40-89 web[33205]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:19:03 ip-172-31-40-89 web[33211]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:19:03 ip-172-31-40-89 web[33216]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:23:00 ip-172-31-40-89 web[33705]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:23:01 ip-172-31-40-89 web[33714]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:23:01 ip-172-31-40-89 web[33719]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:23:01 ip-172-31-40-89 web[33724]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:23:01 ip-172-31-40-89 web[33729]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:25:36 ip-172-31-40-89 web[34188]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:25:37 ip-172-31-40-89 web[34197]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:25:37 ip-172-31-40-89 web[34202]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:25:37 ip-172-31-40-89 web[34207]: /bin/sh: line 1: gunicorn: command not found
+Dec  2 20:25:37 ip-172-31-40-89 web[34212]: /bin/sh: line 1: gunicorn: command not found

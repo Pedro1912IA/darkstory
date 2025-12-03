@@ -5,6 +5,10 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+console.log('Starting Dark Story Backend...');
+console.log('Port:', PORT);
+console.log('Node version:', process.version);
+
 // Middleware
 app.use(cors({
   origin: [
@@ -36,6 +40,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
+  console.log('Environment:', process.env.NODE_ENV || 'development');
 });

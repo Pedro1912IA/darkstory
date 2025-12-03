@@ -1,0 +1,18 @@
+2025/12/02 20:07:48.756310 [INFO] Cleaning log publish record...
+2025/12/02 20:07:48.756360 [INFO] Start log publish job.
+2025/12/02 20:07:48.756365 [INFO] Start publish file /tmp/BundleLogs-1764706068682.zip
+2025/12/02 20:07:48.830518 [INFO] Successful upload file /tmp/BundleLogs-1764706068682.zip to s3 resources/environments/logs/bundle/e-rampyurtwx/i-0160b9bd3975ba042/BundleLogs-1764706068682.zip
+2025/12/02 20:07:48.830650 [INFO] Finished log publish job.
+2025/12/02 20:13:38.649870 [INFO] Cleaning log publish record...
+2025/12/02 20:13:38.649914 [INFO] /tmp/BundleLogs-1764706068682.zip exists, no need for clean up
+2025/12/02 20:13:38.649918 [INFO] Start log publish job.
+2025/12/02 20:13:38.649920 [INFO] Start publish file /tmp/TailLogs-1764706418638.txt
+2025/12/02 20:13:38.705126 [INFO] Successful upload file /tmp/TailLogs-1764706418638.txt to s3 resources/environments/logs/tail/e-rampyurtwx/i-0160b9bd3975ba042/TailLogs-1764706418638.txt
+2025/12/02 20:13:38.705256 [INFO] Finished log publish job.
+2025/12/02 20:20:26.624727 [INFO] Cleaning log publish record...
+2025/12/02 20:20:26.624770 [INFO] /tmp/BundleLogs-1764706068682.zip exists, no need for clean up
+2025/12/02 20:20:26.624776 [INFO] /tmp/TailLogs-1764706418638.txt exists, no need for clean up
+2025/12/02 20:20:26.624778 [INFO] Start log publish job.
+2025/12/02 20:20:26.624781 [INFO] Start publish file /tmp/TailLogs-1764706826614.txt
+2025/12/02 20:20:26.676952 [INFO] Successful upload file /tmp/TailLogs-1764706826614.txt to s3 resources/environments/logs/tail/e-rampyurtwx/i-0160b9bd3975ba042/TailLogs-1764706826614.txt
+2025/12/02 20:20:26.677091 [INFO] Finished log publish job.

@@ -4,8 +4,7 @@
   "description": "Backend API for Dark Story AI",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -14,10 +13,8 @@
     "@google/generative-ai": "^0.21.0",
     "@elevenlabs/elevenlabs-js": "^2.26.0"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  },
   "engines": {
-    "node": "18.x"
+    "node": "18.x",
+    "npm": ">=8.0.0"
   }
 }

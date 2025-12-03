@@ -1,0 +1,27 @@
+2025-12-02 20:36:55,853 [DEBUG] CloudFormation client initialized with endpoint https://cloudformation.us-east-2.amazonaws.com
+2025-12-02 20:36:55,854 [DEBUG] SQS client initialized with endpoint https://sqs.us-east-2.amazonaws.com
+2025-12-02 20:36:55,854 [DEBUG] CloudFormation client initialized with endpoint https://cloudformation.us-east-2.amazonaws.com
+2025-12-02 20:36:55,854 [DEBUG] Enabled single threading mode.
+2025-12-02 20:36:55,854 [DEBUG] Creating /var/lib/cfn-hup/data
+2025-12-02 20:36:55,863 [INFO] No umask value specified in config file. Using the default one: 0o22
+2025-12-02 20:36:55,924 [INFO] Pid: 1771
+2025-12-02 20:36:56,194 [INFO] Refreshing listener credentials
+2025-12-02 20:36:56,269 [INFO] Scheduling next credential refresh in 1800.0 seconds
+2025-12-02 20:37:56,271 [WARNING] Timeout of 60 seconds breached
+2025-12-02 20:37:56,271 [ERROR] Client-side timeout
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/util.py", line 191, in _retry
+    return f(*args, **kwargs)
+  File "/usr/lib/python3.9/site-packages/cfnbootstrap/util.py", line 264, in _timeout
+    raise TimeoutError(
+cfnbootstrap.util.TimeoutError
+2025-12-02 20:37:56,535 [INFO] Received command ElasticBeanstalkCommand-AWSEBAutoScalingGroup (invocation id: 46e8d961-0a29-4aa7-b3f6-ceb260ccc12f)
+2025-12-02 20:37:56,535 [INFO] Running action for aws-eb-command-handler
+2025-12-02 20:38:01,890 [INFO] Action for aws-eb-command-handler succeeded, returning SUCCESS
+2025-12-02 20:39:33,179 [INFO] Received command ElasticBeanstalkCommand-AWSEBAutoScalingGroup (invocation id: b961987b-3eb5-4157-8981-7c68f93522f1)
+2025-12-02 20:39:33,179 [INFO] Running action for aws-eb-command-handler
+2025-12-02 20:39:58,093 [INFO] Action for aws-eb-command-handler succeeded, returning SUCCESS
+2025-12-02 20:41:58,307 [INFO] command processing is alive.
+2025-12-02 20:46:58,704 [INFO] command processing is alive.
+2025-12-02 20:50:39,386 [INFO] Received command ElasticBeanstalkCommand-AWSEBAutoScalingGroup (invocation id: 18e146ef-5a3b-4ee7-a211-fc97737b4c83)
+2025-12-02 20:50:39,387 [INFO] Running action for aws-eb-command-handler
