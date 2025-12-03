@@ -47,9 +47,9 @@ export default function StoryGenerator() {
     setAudioUrl('')
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api'
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || ''
       
-      const response = await fetch(`${API_URL}/generate`, {
+      const response = await fetch(`${API_URL}/api/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),
@@ -66,7 +66,7 @@ export default function StoryGenerator() {
       // Generate audio narration
       setLoadingAudio(true)
       try {
-        const audioResponse = await fetch(`${API_URL}/tts`, {
+        const audioResponse = await fetch(`${API_URL}/api/tts`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text: data.story }),
