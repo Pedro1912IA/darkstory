@@ -52,46 +52,18 @@ Write EXACTLY 1 paragraph. Use vivid descriptions, build tension gradually, and 
             f"Nightmare horror scene: {prompt}. Dark fantasy, haunting, mysterious, creepy"
         ]
         
-        # Use Gemini 2.5 Flash Image model
-        try:
-            image_model = genai.GenerativeModel('gemini-2.5-flash-image')
-            
-            for idx, img_prompt in enumerate(image_prompts):
-                try:
-                    print(f"Generating image {idx + 1} with prompt: {img_prompt[:100]}...")
-                    img_response = image_model.generate_content(img_prompt)
-                    
-                    print(f"Response received for image {idx + 1}")
-                    
-                    # Extract image from response
-                    if img_response and hasattr(img_response, 'candidates'):
-                        for candidate in img_response.candidates:
-                            if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
-                                for part in candidate.content.parts:
-                                    # Check for inline_data attribute
-                                    if hasattr(part, 'inline_data'):
-                                        inline_data = part.inline_data
-                                        if hasattr(inline_data, 'data'):
-                                            image_data = inline_data.data
-                                            # If it's bytes, encode to base64
-                                            if isinstance(image_data, bytes):
-                                                image_data = base64.b64encode(image_data).decode('utf-8')
-                                            images.append(f"data:image/png;base64,{image_data}")
-                                            print(f"Image {idx + 1} successfully generated")
-                                            break
-                                if len(images) > idx:
-                                    break
-                                    
-                except Exception as img_err:
-                    print(f"Image {idx + 1} generation error: {str(img_err)}")
-                    import traceback
-                    traceback.print_exc()
-                    continue
-                    
-        except Exception as model_err:
-            print(f"Image model initialization error: {str(model_err)}")
-            import traceback
-            traceback.print_exc()
+        # Use Pollinations AI for fast image generation (parallel loading)
+        import urllib.parse
+        for img_prompt in image_prompts:
+            try:
+                encoded_prompt = urllib.parse.quote(img_prompt)
+                # Pollinations generates images on-demand via URL (loads in parallel on frontend)
+                # Using 768x768 for faster loading while maintaining quality
+                image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=768&height=768&nologo=true&enhance=true&seed={hash(img_prompt) % 10000}"
+                images.append(image_url)
+            except Exception as img_err:
+                print(f"Image generation error: {img_err}")
+                continue
         
         return jsonify({
             'story': story,
