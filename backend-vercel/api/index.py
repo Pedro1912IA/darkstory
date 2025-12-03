@@ -33,15 +33,41 @@ def generate():
         GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
         genai.configure(api_key=GEMINI_API_KEY)
         
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
-        story_prompt = f"Write a short horror story (1 paragraph) about: {prompt}"
+        # Generate story
+        story_model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        story_prompt = f"""You are a master horror writer. Create a terrifying, atmospheric, and immersive horror story about: {prompt}. 
+
+Write EXACTLY 1 paragraph. Use vivid descriptions, build tension gradually, and create an impactful ending. Write in English with a literary and terrifying style. Make it concise but powerful."""
         
-        response = model.generate_content(story_prompt)
-        story = response.text
+        story_response = story_model.generate_content(story_prompt)
+        story = story_response.text
+        
+        # Generate images
+        image_model = genai.GenerativeModel('gemini-2.0-flash-exp-image')
+        story_snippet = story[:500]
+        
+        image_prompts = [
+            f"Create a dark horror scene based on this story: {story_snippet}. Style: cinematic, dark atmosphere, horror movie aesthetic, dramatic lighting",
+            f"Create a terrifying illustration inspired by: {story_snippet}. Style: gothic horror, ominous, shadows, eerie atmosphere",
+            f"Create a nightmare scene from: {story_snippet}. Style: dark fantasy, haunting, mysterious, horror art"
+        ]
+        
+        images = []
+        for img_prompt in image_prompts:
+            try:
+                img_response = image_model.generate_content(img_prompt)
+                for part in img_response.candidates[0].content.parts:
+                    if hasattr(part, 'inline_data'):
+                        image_data = base64.b64encode(part.inline_data.data).decode('utf-8')
+                        images.append(f"data:image/png;base64,{image_data}")
+                        break
+            except Exception as img_err:
+                print(f"Image generation error: {img_err}")
+                continue
         
         return jsonify({
             'story': story,
-            'images': []
+            'images': images
         })
         
     except Exception as e:
