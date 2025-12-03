@@ -44,36 +44,54 @@ Write EXACTLY 1 paragraph. Use vivid descriptions, build tension gradually, and 
         
         # Generate images using Gemini 2.5 Flash Image
         images = []
-        story_snippet = story[:400]
+        story_snippet = story[:300]
         
         image_prompts = [
-            f"Create a dark horror scene based on this story: {story_snippet}. Style: cinematic, dark atmosphere, horror movie aesthetic, dramatic lighting",
-            f"Create a terrifying gothic horror illustration inspired by: {story_snippet}. Style: ominous shadows, eerie atmosphere",
-            f"Create a nightmare horror scene from: {story_snippet}. Style: dark fantasy, haunting, mysterious, horror art"
+            f"A dark horror scene: {prompt}. Cinematic, dark atmosphere, horror aesthetic, dramatic lighting",
+            f"Gothic horror illustration: {prompt}. Ominous shadows, eerie atmosphere, dark",
+            f"Nightmare horror scene: {prompt}. Dark fantasy, haunting, mysterious, creepy"
         ]
         
         # Use Gemini 2.5 Flash Image model
-        image_model = genai.GenerativeModel('gemini-2.5-flash-image')
-        
-        for img_prompt in image_prompts:
-            try:
-                img_response = image_model.generate_content(img_prompt)
-                
-                # Extract image from response
-                if hasattr(img_response, 'candidates') and img_response.candidates:
-                    for part in img_response.candidates[0].content.parts:
-                        if hasattr(part, 'inline_data') and part.inline_data:
-                            # Get the base64 image data
-                            image_data = part.inline_data.data
-                            # If it's bytes, encode to base64
-                            if isinstance(image_data, bytes):
-                                image_data = base64.b64encode(image_data).decode('utf-8')
-                            images.append(f"data:image/png;base64,{image_data}")
-                            break
-                            
-            except Exception as img_err:
-                print(f"Image generation error: {img_err}")
-                continue
+        try:
+            image_model = genai.GenerativeModel('gemini-2.5-flash-image')
+            
+            for idx, img_prompt in enumerate(image_prompts):
+                try:
+                    print(f"Generating image {idx + 1} with prompt: {img_prompt[:100]}...")
+                    img_response = image_model.generate_content(img_prompt)
+                    
+                    print(f"Response received for image {idx + 1}")
+                    
+                    # Extract image from response
+                    if img_response and hasattr(img_response, 'candidates'):
+                        for candidate in img_response.candidates:
+                            if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                                for part in candidate.content.parts:
+                                    # Check for inline_data attribute
+                                    if hasattr(part, 'inline_data'):
+                                        inline_data = part.inline_data
+                                        if hasattr(inline_data, 'data'):
+                                            image_data = inline_data.data
+                                            # If it's bytes, encode to base64
+                                            if isinstance(image_data, bytes):
+                                                image_data = base64.b64encode(image_data).decode('utf-8')
+                                            images.append(f"data:image/png;base64,{image_data}")
+                                            print(f"Image {idx + 1} successfully generated")
+                                            break
+                                if len(images) > idx:
+                                    break
+                                    
+                except Exception as img_err:
+                    print(f"Image {idx + 1} generation error: {str(img_err)}")
+                    import traceback
+                    traceback.print_exc()
+                    continue
+                    
+        except Exception as model_err:
+            print(f"Image model initialization error: {str(model_err)}")
+            import traceback
+            traceback.print_exc()
         
         return jsonify({
             'story': story,
