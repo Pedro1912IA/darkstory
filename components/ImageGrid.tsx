@@ -56,7 +56,8 @@ export default function ImageGrid({ images }: ImageGridProps) {
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
             onLoad={() => handleImageLoad(index)}
-            loading="lazy"
+            loading={index === 0 ? "eager" : "lazy"}
+            priority={index === 0}
             quality={85}
             unoptimized
           />

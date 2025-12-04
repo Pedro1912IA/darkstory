@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": ["search_aws_docs", "get_aws_doc"]
+    },
+    "vercel": {
+      "command": "uvx",
+      "args": ["vercel-mcp-server"],
+      "env": {
+        "VERCEL_TOKEN": "${VERCEL_TOKEN}"
+      },
+      "disabled": true,
+      "autoApprove": []
+    },
+    "github": {
+      "command": "uvx",
+      "args": ["github-mcp-server"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "disabled": true,
+      "autoApprove": ["list_issues", "search_issues"]
+    }
+  }
+}

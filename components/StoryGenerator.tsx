@@ -61,6 +61,15 @@ export default function StoryGenerator() {
 
       const data = await response.json()
       setStory(data.story)
+      
+      // Preload all images in parallel to trigger generation
+      if (data.images && data.images.length > 0) {
+        data.images.forEach((imgUrl: string) => {
+          const img = new Image()
+          img.src = imgUrl
+        })
+      }
+      
       setImages(data.images)
 
       // Generate audio narration
